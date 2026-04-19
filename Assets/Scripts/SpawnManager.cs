@@ -20,10 +20,26 @@ public class SpawnManager : MonoBehaviour
             return;
         }
 
-        Instantiate(
-            obstaclePrefab,
+        int obstacleType = Random.Range(1, 4);
+
+        var obstacle = ObstacleObjectPool.instance.Acquire(obstacleType);
+
+        /*Instantiate(
+            obstacle,
             spawnPoint.position,
-            obstaclePrefab.transform.rotation
-        );
+            obstacle.transform.rotation
+        );*/
+        obstacle.transform.SetPositionAndRotation(spawnPoint.position, obstacle.transform.rotation);
+
+        MoveLeft obstacleScriptMoveLeft = obstacle.GetComponent<MoveLeft>();
+        if (obstacleScriptMoveLeft)
+        {
+            obstacleScriptMoveLeft.obstacleType = obstacleType;
+        }
+        else 
+        {
+            Debug.Log("Error can't find MoveLeft script in obstacle ");
+        }
+
     }
 }

@@ -4,6 +4,8 @@ public class MoveLeft : MonoBehaviour
 {
     public float speed = 10f;
 
+    public int obstacleType = 0;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -25,7 +27,8 @@ public class MoveLeft : MonoBehaviour
 
         if (transform.position.x < -15 && gameObject.CompareTag("Obstacle"))
         {
-            Destroy(gameObject);
+            ObstacleObjectPool.instance.Release(this.gameObject, obstacleType);
+           
         }
     }
 }
